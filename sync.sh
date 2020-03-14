@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+if [ -f /root/.upodder/subscriptions ]; then
+   mv /root/.upodder/subscriptions /root/.upodder/subscriptions.bak
+fi
+
+mkdir -p  /root/.upodder
+ln -s subscriptions /root/.upodder/
+
 git clone https://github.com/btcradio/upodder.git
 
 cd upodder
