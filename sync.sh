@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
 if [ -f /root/.upodder/subscriptions ]; then
-   mv /root/.upodder/subscriptions /root/.upodder/subscriptions.bak
+   mv /root/.upodder/subscriptions /root/.upodder/subscriptions.$(date +%s | cut -b1-13)
 fi
 
 mkdir -p  /root/.upodder
-ln -s subscriptions /root/.upodder/
+cp  subscriptions /root/.upodder/subscriptions
 
 git clone https://github.com/btcradio/upodder.git
-
-cd upodder
-
 
 
 
