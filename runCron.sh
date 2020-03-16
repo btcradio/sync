@@ -6,6 +6,7 @@ sudo apt update
 
 sudo apt install cron
 sudo apt install acpi
+sudo apt install espeak
 
 sudo systemctl enable cron
 
