@@ -10,7 +10,7 @@ find / -iname "volumes" -print
 echo
 echo
 
-find / -iname "bbtcradio.net" -print
+find / -iname "btcradio.net" -print
 
 echo
 echo
