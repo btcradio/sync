@@ -47,6 +47,7 @@ sudo apt install espeak #for saying block height in broadcast
 
     else
 
+    rm -f bx-linux-x64-qrcode*
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode
     ln -s bx-linux-x64-qrcode bx
 
