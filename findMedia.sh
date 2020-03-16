@@ -10,9 +10,14 @@ find / -iname "volumes" -print
 echo
 echo
 
-find / -iname "btcradio.net" -print
+find /var/lib/docker/volumes/ -iname "btcradio.net" -print
 
 echo
 echo
 
-find / -iname "*.mp3" -print
+find /var/lib/docker/volumes/ -iname "*.html" -print
+
+echo
+echo
+
+find /var/lib/docker/volumes/ -iname "*.mp3" -print
