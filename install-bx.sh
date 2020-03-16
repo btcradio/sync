@@ -26,8 +26,7 @@ sudo apt update
 
 sudo apt install wget
 
-sudo apt install espeak #for saying block height in broadcast
-
+apt install speech-dispatcher
 
     read -p "Would you like to build libbitcoin-explorer from source? NOTE: This takes a while and uses alot of resources on the droplet. If n we will download a binary and link to it. (y/n) " -n 1;
 
@@ -49,6 +48,7 @@ sudo apt install espeak #for saying block height in broadcast
 
     rm -f bx-linux-x64-qrcode*
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode
+    chmod +x bx-linux-x64-qrcode
     ln -s bx-linux-x64-qrcode bx
 
     fi;
