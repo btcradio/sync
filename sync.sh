@@ -42,14 +42,51 @@ if [ -d  /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media
 
 fi
 
-upodder
+
+
+upodder --quiet
+
+
 
 find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +30
 #find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +30 -exec rm -f {} \;
 
-echo "Nummber of episodes" && ls -1 $MEDIA_DIRECTORY | wc -l
 
-mv $(whoami)/Downloads/podcasts/* $MEDIA_DIRECTORY
-#mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
+echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
-echo "Nummber of episodes" && ls -1 $MEDIA_DIRECTORY | wc -l
+
+if [ -f /$(whoami)/Downloads/podcasts/* ]; then
+
+    mv $(whoami)/Downloads/podcasts/* $MEDIA_DIRECTORY
+    #mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
+
+else
+
+    echo "No new podcasts to sync..."
+
+fi
+
+
+echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
+
+
+# upodder --help
+#usage: upodder [-h] [--no-download] [--podcastdir PODCASTDIR]
+#               [--basedir BASEDIR] [--oldness OLDNESS] [--mark-seen]
+#               [--import-opml OPMLPATH] [--quiet]
+#
+#Download podcasts via the command line.
+#
+#optional arguments:
+#  -h, --help            show this help message and exit
+#  --no-download         Don't download any files. Just mark as read.
+#  --podcastdir PODCASTDIR, -p PODCASTDIR
+#                        Folder to download podcast files to.
+#  --basedir BASEDIR, -b BASEDIR
+#                        Folder to store subscriptions and seen database.
+#  --oldness OLDNESS, -o OLDNESS
+#                        Skip entries older than X days.
+#  --mark-seen           Just mark all entries as seen and exit.
+#  --import-opml OPMLPATH, -i OPMLPATH
+#                        Import feeds from an OPML file.
+#  --quiet               Only output errors.
