@@ -51,16 +51,8 @@ find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +7 -exec rm -f {} \;
 
 echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
-if [ -f /$(whoami)/Downloads/podcasts/* ]; then
-
-    mv $(whoami)/Downloads/podcasts/* $MEDIA_DIRECTORY
-    #mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
-
-else
-
-    echo "No new podcasts to sync..."
-
-fi
+mv $(whoami)/Downloads/podcasts/* $MEDIA_DIRECTORY
+#mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
 
 echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
