@@ -44,6 +44,12 @@ fi
 
 upodder
 
+find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +30
+#find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +30 -exec rm -f {} \;
+
+echo "Nummber of episodes" && ls -1 $MEDIA_DIRECTORY | wc -l
+
 mv $(whoami)/Downloads/podcasts/* $MEDIA_DIRECTORY
 #mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
 
+echo "Nummber of episodes" && ls -1 $MEDIA_DIRECTORY | wc -l
