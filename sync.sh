@@ -3,8 +3,7 @@
 #apt-get install upodder
 #git clone https://github.com/btcradio/upodder.git
 
-
-echo $(whoami)
+echo "Running as: " $(whoami)
 
 if [ -f /$(whoami)/.upodder/subscriptions ]; then
 
@@ -12,27 +11,30 @@ if [ -f /$(whoami)/.upodder/subscriptions ]; then
     if [ ! cmp /$(whoami)/.upodder/subscriptions  /subscriptions ]; then
 
         echo
-        echo "different!!!!!!!!!!!!!"
+        echo "New subscriptions added!"
+        mv /$(whoami)/.upodder/subscriptions /root/.upodder/subscriptions.$(date +%s | cut -b1-13)
+        cp subscriptions /$(whoami)/.upodder/subscriptions
+        ls /$(whoami)/.upodder/
         echo
-      # restart service
+
     else
 
         echo
-        echo "same!!!!!!!!!!!!!"
+        echo "No new subscriptions added!"
+        mkdir -p  /$(whoami)/.upodder
+        cp subscriptions /$(whoami)/.upodder/subscriptions
         echo
 
     fi
 
-    mv /$(whoami)/.upodder/subscriptions /root/.upodder/subscriptions.$(date +%s | cut -b1-13)
-    cp subscriptions /$(whoami)/.upodder/subscriptions
-    ls /$(whoami)/.upodder/
-
 else
 
-    mkdir -p  /$(whoami)/.upodder
-    cp subscriptions /$(whoami)/.upodder/subscriptions
+echo
 
 fi
+
+echo "Active subscriptions...."
+cat  /$(whoami)/.upodder/subscriptions
 
 if [ -d  /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media  ]; then
 
@@ -42,18 +44,12 @@ if [ -d  /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media
 
 fi
 
+#upodder --quiet
+upodder
 
-
-upodder --quiet
-
-
-
-find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +30
-#find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +30 -exec rm -f {} \;
-
+find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +7 -exec rm -f {} \;
 
 echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
-
 
 if [ -f /$(whoami)/Downloads/podcasts/* ]; then
 
@@ -66,27 +62,8 @@ else
 
 fi
 
-
 echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
+echo "You may upload episodes manually with an ftp client."
+ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
 
-# upodder --help
-#usage: upodder [-h] [--no-download] [--podcastdir PODCASTDIR]
-#               [--basedir BASEDIR] [--oldness OLDNESS] [--mark-seen]
-#               [--import-opml OPMLPATH] [--quiet]
-#
-#Download podcasts via the command line.
-#
-#optional arguments:
-#  -h, --help            show this help message and exit
-#  --no-download         Don't download any files. Just mark as read.
-#  --podcastdir PODCASTDIR, -p PODCASTDIR
-#                        Folder to download podcast files to.
-#  --basedir BASEDIR, -b BASEDIR
-#                        Folder to store subscriptions and seen database.
-#  --oldness OLDNESS, -o OLDNESS
-#                        Skip entries older than X days.
-#  --mark-seen           Just mark all entries as seen and exit.
-#  --import-opml OPMLPATH, -i OPMLPATH
-#                        Import feeds from an OPML file.
-#  --quiet               Only output errors.
