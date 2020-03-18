@@ -1,1 +1,3 @@
-# tools for syncing episodes
+# /tools
+
+## sync.sh - for syncing episodes
