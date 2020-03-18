@@ -54,14 +54,3 @@ apt install speech-dispatcher
     fi;
 
 
-#sudo systemctl enable cron
-#
-## /var/spool/cron/crontabs/
-#
-#echo "minute hour day_of_month month day_of_week command_to_run"
-#echo "30 17 * * 2 curl http://www.google.com"
-#
-#crontab -e
-#
-#
-#
