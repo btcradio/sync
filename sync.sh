@@ -45,7 +45,7 @@ if [ -d  /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media
 fi
 
 #upodder --quiet
-upodder
+upodder -o 7
 
 find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +7 -exec rm -f {} \;
 
