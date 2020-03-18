@@ -41,7 +41,8 @@ echo
 echo
     cat  ~/.ssh/$DATE.github_rsa.pub
 echo
-    echo add this to you github account...
+    echo "add this to you github account..."
+    echo "public key name: " $DATE.github_rsa.pub
 echo
 
 }
