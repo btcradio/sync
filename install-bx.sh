@@ -1,36 +1,14 @@
 #!/usr/bin/env bash
 
-pathadd() {
-    newelement=${1%/}
-    if [ -d "$1" ] && ! echo $PATH | grep -E -q "(^|:)$newelement($|:)" ; then
-        if [ "$2" = "after" ] ; then
-            PATH="$PATH:$newelement"
-        else
-            PATH="$newelement:$PATH"
-        fi
-    fi
-}
-
-pathrm() {
-    PATH="$(echo $PATH | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g')"
-}
-
-#example usage above
-#pathadd "/foo/bar"
-#pathadd "/baz/bat" after
-#export PATH
-
-#REF: https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
-
 sudo apt update
 
 sudo apt install wget
 
 apt install speech-dispatcher
 
-    read -p "Would you like to build libbitcoin-explorer from source? NOTE: This takes a while and uses alot of resources on the droplet. If n we will download a binary and link to it. (y/n) " -n 1;
+read -p "Would you like to build libbitcoin-explorer from source? NOTE: This takes a while and uses alot of resources on the droplet. If n we will download a binary and link to it. (y/n) " -n 1;
 
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ $REPLY =~ ^[Yy]$ ]]; then
 
     #Build libbitcoin-explorer from source # Alot of work
 
@@ -44,13 +22,12 @@ apt install speech-dispatcher
     chmod +x install.sh
     ./install.sh --prefix=/root/bx --build-boost --build-zmq --disable-shared
 
-    else
+else
 
     rm -f bx-linux-x64-qrcode*
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode
     chmod +x bx-linux-x64-qrcode
     ln -s bx-linux-x64-qrcode bx
 
-    fi;
-
+fi;
 
