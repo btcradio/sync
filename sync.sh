@@ -5,24 +5,26 @@
 
 echo "Running as: " $(whoami)
 
-if [ -f /$(whoami)/.upodder/subscriptions ]; then
+echo $(PWD)
+
+if [ -f ~/.upodder/subscriptions ]; then
 
     #if [ ! cmp /root/.upodder/subscriptions  ./subscription >/dev/null 2>&1 ]; then
-    if [ ! cmp /$(whoami)/.upodder/subscriptions  /subscriptions ]; then
+    if  ! cmp ~/.upodder/subscriptions $(PWD)/subscriptions >/dev/null 2>&1 ; then
 
         echo
         echo "New subscriptions added!"
-        mv /$(whoami)/.upodder/subscriptions /root/.upodder/subscriptions.$(date +%s | cut -b1-13)
-        cp subscriptions /$(whoami)/.upodder/subscriptions
-        ls /$(whoami)/.upodder/
+        mv ~/.upodder/subscriptions ~/.upodder/subscriptions.$(date +%s | cut -b1-13)
+        cp $(PWD)/subscriptions ~/.upodder/subscriptions
+        ls ~/.upodder/
         echo
 
     else
 
         echo
         echo "No new subscriptions added!"
-        mkdir -p  /$(whoami)/.upodder
-        cp subscriptions /$(whoami)/.upodder/subscriptions
+        mkdir -p  ~/.upodder
+        cp $(PWD)/subscriptions ~/.upodder/subscriptions
         echo
 
     fi
@@ -34,7 +36,7 @@ echo
 fi
 
 echo "Active subscriptions...."
-cat  /$(whoami)/.upodder/subscriptions
+cat  ~/.upodder/subscriptions
 
 if [ -d  /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media  ]; then
 
@@ -51,7 +53,7 @@ find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +7 -exec rm -f {} \;
 
 echo "Number of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
-LOCAL_DOWNLOADS=/$(whoami)/Downloads/podcasts
+LOCAL_DOWNLOADS=~/Downloads/podcasts
 
 mv $LOCAL_DOWNLOADS/* $MEDIA_DIRECTORY
 #mv /$(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
