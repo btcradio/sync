@@ -61,7 +61,7 @@ echo "Number of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 echo "You may upload episodes manually with an ftp client."
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
 
-# The following script parses podcast feeds and downloads all podcast episodes listed in 
+# The following script parses podcast feeds and downloads all podcast episodes listed in
 # the feed if they don't exist within the target path. The target directory will be created
 # if it does not exist.
 
