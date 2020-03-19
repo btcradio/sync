@@ -5,17 +5,17 @@
 
 echo "Running as: " $(whoami)
 
-echo $(PWD)
+echo $(pwd)
 
 if [ -f ~/.upodder/subscriptions ]; then
 
     #if [ ! cmp /root/.upodder/subscriptions  ./subscription >/dev/null 2>&1 ]; then
-    if  ! cmp ~/.upodder/subscriptions $(PWD)/subscriptions >/dev/null 2>&1 ; then
+    if  ! cmp ~/.upodder/subscriptions $(pwd)/subscriptions >/dev/null 2>&1 ; then
 
         echo
         echo "New subscriptions added!"
         mv ~/.upodder/subscriptions ~/.upodder/subscriptions.$(date +%s | cut -b1-13)
-        cp $(PWD)/subscriptions ~/.upodder/subscriptions
+        cp $(pwd)/subscriptions ~/.upodder/subscriptions
         ls ~/.upodder/
         echo
 
@@ -24,7 +24,7 @@ if [ -f ~/.upodder/subscriptions ]; then
         echo
         echo "No new subscriptions added!"
         mkdir -p  ~/.upodder
-        cp $(PWD)/subscriptions ~/.upodder/subscriptions
+        cp $(pwd)/subscriptions ~/.upodder/subscriptions
         echo
 
     fi
