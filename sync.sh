@@ -38,8 +38,8 @@ cat  /$(whoami)/.upodder/subscriptions
 
 if [ -d  /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media  ]; then
 
-    #REF: /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
-    MEDIA_DIRECTORY=/var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
+    #REF: /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media
+    MEDIA_DIRECTORY=/var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media
     echo "MEDIA_DIRECTORY=$MEDIA_DIRECTORY"
 
 fi
@@ -49,17 +49,17 @@ upodder -o 7
 
 find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +7 -exec rm -f {} \;
 
-echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
+echo "Number of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
-mv $(whoami)/Downloads/podcasts/* $MEDIA_DIRECTORY
-#mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
+LOCAL_DOWNLOADS=/$(whoami)/Downloads/podcasts
 
-echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
+mv $LOCAL_DOWNLOADS/* $MEDIA_DIRECTORY
+#mv /$(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
+
+echo "Number of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
 echo "You may upload episodes manually with an ftp client."
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
-
-#!/usr/bin/env bash
 
 # The following script parses podcast feeds and downloads all podcast episodes listed in 
 # the feed if they don't exist within the target path. The target directory will be created
@@ -70,13 +70,15 @@ ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
 [ -x "$(command -v xargs)" ] || (echo "xargs is not installed" && exit 1)
 
 function download_files_from_feed {
+
     [ -d $2 ] || mkdir -p $2
     cd $2
     wget -nc $(wget -q -O - $1 | sed -n 's/.*enclosure.*url="\([^"]*\)" .*/\1/p')
 }
 
 function echo_update_stats {
-    PODCAST_UPDATE_LIST=$(find $MEDIA_DIRECTORY -ctime -1 -type f)
+
+    PODCAST_UPDATE_LIST=$(find $MEDIA_DIRECTORY -name "*.mp3" -ctime -1 -type f)
 
     echo "All podcasts updated."
 
@@ -94,20 +96,18 @@ read -p "Would you like to download ALL episodes of all pods on your subscriptio
 echo "";
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 
-# Use the same folder as upodder
-PODCAST_DIR=~/Downloads/podcasts
 
 input="subscriptions"
 while IFS= read -r line
 do
 
-download_files_from_feed $line $PODCAST_DIR
+download_files_from_feed $line $LOCAL_DOWNLOADS
 
 #find $MEDIA_DIRECTORY -name "*.mp3" -type f -mtime +7 -exec rm -f {} \;
 
 echo "Nummber of episodes in MEDIA_DIRECTORY" && ls -1 $MEDIA_DIRECTORY | wc -l
 
-mv ~/Downloads/podcasts/* $MEDIA_DIRECTORY
+mv  $LOCAL_DOWNLOADS/* $MEDIA_DIRECTORY
 #docker location
 #mv $(whoami)/Downloads/podcasts/* /var/lib/docker/volumes/azuracast_station_data/_data/btcradio.net/media/
 
