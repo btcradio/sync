@@ -26,8 +26,14 @@ else
 
     rm -f bx-linux-x64-qrcode*
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode
-    chmod +x bx-linux-x64-qrcode
-    ln -s bx-linux-x64-qrcode bx
+    chmod +x $HOME/tools/bx-linux-x64-qrcode
+    ln -s $HOME/tools/bx-linux-x64-qrcode $HOME/tools/bx
 
 fi;
+#append
+export PATH="${PATH:+${PATH}:}$HOME/tools/bx"
 
+#prepend
+export PATH="$HOME/tools/bx${PATH:+:${PATH}}"
+
+export PATH
